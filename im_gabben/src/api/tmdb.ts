@@ -11,3 +11,13 @@ export async function fetchPopularMovies() {
   if (!res.ok) throw new Error("Failed to fetch movies");
   return res.json();
 }
+
+export async function fetchMovieDetails(movieId: number) {
+  const res = await fetch(`${BASE_URL}/movie/${movieId}?language=en-US`, {
+    headers: {
+      Authorization: `Bearer ${ACCESS_TOKEN}`,
+    },
+  });
+  if (!res.ok) throw new Error("Failed to fetch movie details");
+  return res.json();
+}

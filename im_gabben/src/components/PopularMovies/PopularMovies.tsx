@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import type { Movie } from "../../types/Movie";
 
@@ -15,8 +16,10 @@ import {
 } from "@mui/material";
 
 export const PopularMovies: React.FC = () => {
+  const navigate = useNavigate();
+
   const [movies, setMovies] = useState<Movie[]>([]);
-    const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(true);
   
     useEffect(() => {
       async function loadMovies() {
@@ -50,11 +53,15 @@ export const PopularMovies: React.FC = () => {
         >
           Popular Movies
         </Typography>
-  
+
         <Grid container spacing={4}>
           {movies.map((movie) => (
             <Grid item xs={12} sm={6} md={3} key={movie.id}>
               <Card
+                onClick={() =>
+                  navigate(`/movie/${movie.id}`, { state: movie })
+                }
+              
                 sx={{
                   height: 520,
                   borderRadius: 3,
@@ -90,13 +97,17 @@ export const PopularMovies: React.FC = () => {
                   >
                     {movie.title}
                   </Typography>
-  
-                  <Typography variant="body2" color="text.secondary" gutterBottom>
+
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    gutterBottom
+                  >
                     {movie.release_date
                       ? new Date(movie.release_date).getFullYear()
                       : "—"}
                   </Typography>
-  
+
                   <Box sx={{ mt: 1 }}>
                     <Typography
                       variant="body2"
