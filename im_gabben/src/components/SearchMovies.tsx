@@ -18,8 +18,26 @@ export function MovieSearch({ onSearch }: Readonly<MovieSearchProps>) {
     <Box sx={{ width: "100%", mb: 4 }}>
       <TextField
         fullWidth
-        label="Search movies..."
+        placeholder="Search movies..."
         variant="outlined"
+        sx={{
+          backgroundColor: "#f5f5f5",
+          transition: "background-color 0.3s ease",
+          "& .MuiOutlinedInput-root": {
+            "& fieldset": {
+              borderColor: "#ccc",
+            },
+            "&:hover fieldset": {
+              borderColor: "#999",
+            },
+            "&.Mui-focused": {
+              backgroundColor: "#ffffff",
+              "& fieldset": {
+                borderColor: "#ccc",
+              },
+            },
+          },
+        }}
         value={query}
         onChange={handleChange}
       />
