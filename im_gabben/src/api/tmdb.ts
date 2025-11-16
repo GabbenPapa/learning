@@ -21,3 +21,12 @@ export async function fetchMovieDetails(movieId: number) {
   if (!res.ok) throw new Error("Failed to fetch movie details");
   return res.json();
 }
+
+export async function searchMovies(query: string) {
+  const res = await fetch(
+    `https://api.themoviedb.org/3/search/movie?api_key=${
+      import.meta.env.VITE_TMDB_API_KEY
+    }&query=${query}`
+  );
+  return res.json();
+}
