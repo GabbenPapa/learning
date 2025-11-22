@@ -5,6 +5,7 @@ import { MovieDetails } from "./components/MovieDetails";
 
 const router = createBrowserRouter([
   { path: "/", element: <PopularMovies /> },
+  { path: "/search", element: <PopularMovies /> },
   { path: "/movie/:id", element: <MovieDetails /> },
 ]);
 
