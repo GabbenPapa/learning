@@ -1,11 +1,15 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { PopularMovies } from "./components/PopularMovies/PopularMovies";
+import { Home } from "./pages/Home";
+import { PopularMovies } from "./pages/PopularMovies";
+import { NowPlaying } from "./pages/NowPlaying";
 import { MovieDetails } from "./components/MovieDetails";
 
-
 const router = createBrowserRouter([
-  { path: "/", element: <PopularMovies /> },
-  { path: "/search", element: <PopularMovies /> },
+  { path: "/", element: <Home /> },
+  { path: "/popular", element: <PopularMovies /> },
+  { path: "/now-playing", element: <NowPlaying /> },
+  { path: "/top-rated", element: <NowPlaying /> },
+  { path: "/upcoming", element: <NowPlaying /> },
   { path: "/movie/:id", element: <MovieDetails /> },
 ]);
 

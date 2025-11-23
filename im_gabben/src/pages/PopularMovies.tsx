@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import type { Movie } from "../../types/Movie";
+import type { Movie } from "../types/Movie";
 
-import { fetchPopularMovies, searchMovies } from "../../api/tmdb";
-import { MovieSearch } from "../SearchMovies";
+import { fetchPopularMovies, searchMovies } from "../api/tmdb";
+import { MovieSearch } from "../components/SearchMovies";
 
 import {
   Container,
@@ -78,7 +78,7 @@ export const PopularMovies: React.FC = () => {
       )}
       <Grid container spacing={4}>
         {listToShow.map((movie) => (
-          <Grid item xs={12} sm={6} md={3} key={movie.id}>
+          <Grid size={{ xs: 12, sm: 6, md: 3 }} key={movie.id}>
             <Card
               onClick={() => navigate(`/movie/${movie.id}`, { state: movie })}
               sx={{
