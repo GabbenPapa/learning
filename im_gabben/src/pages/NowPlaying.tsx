@@ -1,22 +1,48 @@
-import React from "react";
-// import { useNavigate } from "react-router-dom";
+// import React, { useEffect, useState } from "react";
+import { Container, Typography } from "@mui/material";
+// import { Container, Typography, CircularProgress } from "@mui/material";
 
-import { Container } from "@mui/material";
-
-import { MovieSearch } from "../components/SearchMovies";
+// import type { Movie } from "../types/Movie";
+// import { fetchNowPlaying } from "../api/tmdb";
+// import { MovieGrid } from "../components/MovieGrid";
 
 export const NowPlaying: React.FC = () => {
-  // const navigate = useNavigate();
-
   // const [movies, setMovies] = useState<Movie[]>([]);
+  // const [loading, setLoading] = useState(true);
+
+  // useEffect(() => {
+  //   async function loadMovies() {
+  //     try {
+  //       const data = await fetchNowPlaying();
+  //       setMovies((data as { results: Movie[] }).results);
+  //     } catch (err) {
+  //       console.error("Error fetching movies:", err);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   }
+  //   loadMovies();
+  // }, []);
+
+  // if (loading) {
+  //   return (
+  //     <Container sx={{ textAlign: "center", mt: 8 }}>
+  //       <CircularProgress />
+  //     </Container>
+  //   );
+  // }
 
   return (
-    <Container sx={{ mt: 6 }}>
-      <MovieSearch
-        onSearch={() => {
-          console.log("search");
-        }}
-      />
+    <Container sx={{ mt: 4 }}>
+      <Typography
+        variant="h4"
+        fontWeight="bold"
+        textAlign="center"
+        gutterBottom
+      >
+        Now Playing
+      </Typography>
+      {/* <MovieGrid movies={movies} /> */}
     </Container>
   );
 };

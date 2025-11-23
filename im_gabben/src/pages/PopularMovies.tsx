@@ -1,36 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-
+import { Container, Typography, CircularProgress } from "@mui/material";
 import type { Movie } from "../types/Movie";
-
-import { fetchPopularMovies, searchMovies } from "../api/tmdb";
-import { MovieSearch } from "../components/SearchMovies";
-
-import {
-  Container,
-  Card,
-  CardMedia,
-  CardContent,
-  Typography,
-  CircularProgress,
-  Box,
-} from "@mui/material";
-import Grid from "@mui/material/Grid";
+import { fetchPopularMovies } from "../api/tmdb";
+import { MovieGrid } from "../components/MovieGrid";
 
 export const PopularMovies: React.FC = () => {
-  const navigate = useNavigate();
-
   const [movies, setMovies] = useState<Movie[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-
-  const [searchQuery, setSearchQuery] = useState<string>("");
-  const [searchResults, setSearchResults] = useState<Movie[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function loadMovies() {
       try {
         const data = await fetchPopularMovies();
-        setMovies((data as { results: Movie[] }).results as Movie[]);
+        setMovies((data as { results: Movie[] }).results);
       } catch (err) {
         console.error("Error fetching movies:", err);
       } finally {
@@ -39,20 +21,6 @@ export const PopularMovies: React.FC = () => {
     }
     loadMovies();
   }, []);
-
-  const handleSearch = async (query: string) => {
-    setSearchQuery(query);
-
-    if (query.length < 2) {
-      setSearchResults([]);
-      return;
-    }
-
-    const data = await searchMovies(query);
-    setSearchResults((data as { results: Movie[] }).results);
-  };
-
-  const listToShow = searchQuery.length >= 2 ? searchResults : movies;
 
   if (loading) {
     return (
@@ -63,84 +31,16 @@ export const PopularMovies: React.FC = () => {
   }
 
   return (
-    <Container sx={{ mt: 6 }}>
-      <MovieSearch onSearch={handleSearch} />
-
-      {searchQuery !== "" && searchResults.length === 0 && (
-        <Typography
-          variant="h4"
-          fontWeight="bold"
-          textAlign="center"
-          gutterBottom
-        >
-          Popular Movies
-        </Typography>
-      )}
-      <Grid container spacing={4}>
-        {listToShow.map((movie) => (
-          <Grid size={{ xs: 12, sm: 6, md: 3 }} key={movie.id}>
-            <Card
-              onClick={() => navigate(`/movie/${movie.id}`, { state: movie })}
-              sx={{
-                height: 520,
-                borderRadius: 3,
-                boxShadow: 4,
-                transition: "transform 0.3s ease, box-shadow 0.3s ease",
-                "&:hover": {
-                  transform: "scale(1.05)",
-                  boxShadow: 8,
-                },
-                cursor: "pointer",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "space-between",
-              }}
-            >
-              <CardMedia
-                component="img"
-                image={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                alt={movie.title}
-                sx={{
-                  height: 350,
-                  objectFit: "cover",
-                  borderTopLeftRadius: 12,
-                  borderTopRightRadius: 12,
-                }}
-              />
-              <CardContent sx={{ flexGrow: 1 }}>
-                <Typography
-                  variant="h6"
-                  fontWeight="600"
-                  noWrap
-                  title={movie.title}
-                >
-                  {movie.title}
-                </Typography>
-
-                <Typography variant="body2" color="text.secondary" gutterBottom>
-                  {movie.release_date
-                    ? new Date(movie.release_date).getFullYear()
-                    : "—"}
-                </Typography>
-
-                <Box sx={{ mt: 1 }}>
-                  <Typography
-                    variant="body2"
-                    sx={{
-                      color:
-                        movie.vote_average > 7
-                          ? "success.main"
-                          : "text.secondary",
-                    }}
-                  >
-                    ⭐ {movie.vote_average.toFixed(1)} / 10
-                  </Typography>
-                </Box>
-              </CardContent>
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
+    <Container sx={{ mt: 4 }}>
+      <Typography
+        variant="h4"
+        fontWeight="bold"
+        textAlign="center"
+        gutterBottom
+      >
+        Popular Movies
+      </Typography>
+      <MovieGrid movies={movies} />
     </Container>
   );
 };
