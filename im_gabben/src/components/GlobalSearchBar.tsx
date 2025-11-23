@@ -27,7 +27,7 @@ export const GlobalSearchBar: React.FC = () => {
   const [showResults, setShowResults] = useState(false);
 
   useEffect(() => {
-    if (query.length < 2) {
+    if (query.length <= 2) {
       setResults([]);
       setShowResults(false);
       return;
@@ -64,8 +64,10 @@ export const GlobalSearchBar: React.FC = () => {
   return (
     <Box
       sx={{
-        position: "sticky",
+        position: "fixed",
         top: 0,
+        left: 0,
+        width: "100%",
         zIndex: 1100,
         bgcolor: "background.paper",
         boxShadow: 2,
