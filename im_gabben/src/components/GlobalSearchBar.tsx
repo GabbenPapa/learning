@@ -73,7 +73,7 @@ export const GlobalSearchBar: React.FC = () => {
         borderColor: "divider",
       }}
     >
-      <Container sx={{ py: 2 }}>
+      <Container sx={{ py: 1 }}>
         <TextField
           fullWidth
           placeholder="Search all movies..."
@@ -118,83 +118,82 @@ export const GlobalSearchBar: React.FC = () => {
       </Container>
 
       {/* Search Results Dropdown */}
-      <Paper
-        elevation={3}
-        sx={{
-          maxHeight: "80vh",
-          // maxWidth: "80%",
-          overflowY: "auto",
-          borderTop: "1px solid",
-          borderColor: "divider",
-        }}
-      >
-        {showResults && results.length > 0 && (
-          
-        
-        <Container sx={{ py: 3 }}>
-          <Typography variant="h6" fontWeight="bold" gutterBottom>
-            Search Results for "{query}" ({results.length} found)
-          </Typography>
+      {showResults && results.length > 0 && (
+        <Container sx={{ py: 1 }}>
+          <Paper
+            elevation={1}
+            sx={{
+              maxHeight: "60vh",
+              overflowY: "auto",
+              borderTop: "1px solid",
+              borderColor: "divider",
+            }}
+          >
+            <Container sx={{ py: 3 }}>
+              <Typography variant="h6" fontWeight="bold" gutterBottom>
+                Search Results for "{query}" ({results.length} found)
+              </Typography>
 
-          <Grid container spacing={3}>
-            {results.slice(0, 12).map((movie) => (
-              <Grid size={{ xs: 12, sm: 6, md: 3, lg: 2 }} key={movie.id}>
-                <Card
-                  onClick={() => handleMovieClick(movie)}
-                  sx={{
-                    cursor: "pointer",
-                    height: "100%",
-                    transition: "transform 0.2s, box-shadow 0.2s",
-                    "&:hover": {
-                      transform: "scale(1.03)",
-                      boxShadow: 6,
-                    },
-                  }}
-                >
-                  <CardMedia
-                    component="img"
-                    height="200"
-                    image={
-                      movie.poster_path
-                        ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-                        : "https://via.placeholder.com/500x750?text=No+Image"
-                    }
-                    alt={movie.title}
-                    sx={{ objectFit: "cover" }}
-                  />
-                  <CardContent sx={{ p: 1.5 }}>
-                    <Typography
-                      variant="body2"
-                      fontWeight="600"
-                      noWrap
-                      title={movie.title}
+              <Grid container spacing={3}>
+                {results.slice(0, 12).map((movie) => (
+                  <Grid size={{ xs: 12, sm: 6, md: 3, lg: 2 }} key={movie.id}>
+                    <Card
+                      onClick={() => handleMovieClick(movie)}
+                      sx={{
+                        cursor: "pointer",
+                        height: "100%",
+                        transition: "transform 0.2s, box-shadow 0.2s",
+                        "&:hover": {
+                          transform: "scale(1.03)",
+                          boxShadow: 6,
+                        },
+                      }}
                     >
-                      {movie.title}
-                    </Typography>
-                    <Typography variant="caption" color="text.secondary">
-                      {movie.release_date
-                        ? new Date(movie.release_date).getFullYear()
-                        : "—"}
-                    </Typography>
-                  </CardContent>
-                </Card>
+                      <CardMedia
+                        component="img"
+                        height="200"
+                        image={
+                          movie.poster_path
+                            ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+                            : "https://via.placeholder.com/500x750?text=No+Image"
+                        }
+                        alt={movie.title}
+                        sx={{ objectFit: "cover" }}
+                      />
+                      <CardContent sx={{ p: 1.5 }}>
+                        <Typography
+                          variant="body2"
+                          fontWeight="600"
+                          noWrap
+                          title={movie.title}
+                        >
+                          {movie.title}
+                        </Typography>
+                        <Typography variant="caption" color="text.secondary">
+                          {movie.release_date
+                            ? new Date(movie.release_date).getFullYear()
+                            : "—"}
+                        </Typography>
+                      </CardContent>
+                    </Card>
+                  </Grid>
+                ))}
               </Grid>
-            ))}
-          </Grid>
 
-          {results.length > 12 && (
-            <Typography
-              variant="body2"
-              color="text.secondary"
-              textAlign="center"
-              sx={{ mt: 2 }}
-            >
-              Showing first 12 of {results.length} results
-            </Typography>
-          )}
-          </Container>
-        )}
-      </Paper>
+              {results.length > 12 && (
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  textAlign="center"
+                  sx={{ mt: 2 }}
+                >
+                  Showing first 12 of {results.length} results
+                </Typography>
+              )}
+            </Container>
+          </Paper>
+        </Container>
+      )}
 
       {showResults &&
         results.length === 0 &&

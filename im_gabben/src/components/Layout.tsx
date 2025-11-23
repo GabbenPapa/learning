@@ -41,12 +41,10 @@ export const Layout: React.FC = () => {
           onClick={toggleDrawer(true)}
           sx={{
             position: "fixed",
-            top: 32,
+            top: 24,
             left: 16,
             zIndex: 1200,
-            // bgcolor: "primary.main",
             color: "black",
-            
           }}
         >
           <GiHamburgerMenu size={22} />
