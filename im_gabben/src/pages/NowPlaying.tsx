@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Container, Typography, CircularProgress } from "@mui/material";
+import { Container, Typography } from "@mui/material";
 import type { Movie } from "../types/Movie";
 import { fetchNowPlaying } from "../api/tmdb";
 import { MovieGrid } from "../components/MovieGrid";
+import { LoadingSpinner } from "../components/LoadingSpinner";
 
 export const NowPlaying: React.FC = () => {
   const [movies, setMovies] = useState<Movie[]>([]);
@@ -22,25 +23,21 @@ export const NowPlaying: React.FC = () => {
     loadMovies();
   }, []);
 
-  if (loading) {
-    return (
-      <Container sx={{ textAlign: "center", mt: 8 }}>
-        <CircularProgress />
-      </Container>
-    );
-  }
-
   return (
-    <Container sx={{ mt: 6 }}>
-      <Typography
-        variant="h4"
-        fontWeight="bold"
-        textAlign="center"
-        gutterBottom
-      >
-        Now Playing
-      </Typography>
-      <MovieGrid movies={movies} />
-    </Container>
+    <>
+      <LoadingSpinner loading={loading} />
+
+      <Container sx={{ mt: 6 }}>
+        <Typography
+          variant="h4"
+          fontWeight="bold"
+          textAlign="center"
+          gutterBottom
+        >
+          Now Playing
+        </Typography>
+        <MovieGrid movies={movies} />
+      </Container>
+    </>
   );
 };
