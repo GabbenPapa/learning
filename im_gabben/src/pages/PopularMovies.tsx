@@ -31,7 +31,7 @@ export const PopularMovies: React.FC = () => {
   }
 
   return (
-    <Container sx={{ mt: 4 }}>
+    <Container sx={{ mt: 6 }}>
       <Typography
         variant="h4"
         fontWeight="bold"

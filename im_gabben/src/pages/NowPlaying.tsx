@@ -1,39 +1,37 @@
-// import React, { useEffect, useState } from "react";
-import { Container, Typography } from "@mui/material";
-// import { Container, Typography, CircularProgress } from "@mui/material";
-
-// import type { Movie } from "../types/Movie";
-// import { fetchNowPlaying } from "../api/tmdb";
-// import { MovieGrid } from "../components/MovieGrid";
+import React, { useEffect, useState } from "react";
+import { Container, Typography, CircularProgress } from "@mui/material";
+import type { Movie } from "../types/Movie";
+import { fetchNowPlaying } from "../api/tmdb";
+import { MovieGrid } from "../components/MovieGrid";
 
 export const NowPlaying: React.FC = () => {
-  // const [movies, setMovies] = useState<Movie[]>([]);
-  // const [loading, setLoading] = useState(true);
+  const [movies, setMovies] = useState<Movie[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  // useEffect(() => {
-  //   async function loadMovies() {
-  //     try {
-  //       const data = await fetchNowPlaying();
-  //       setMovies((data as { results: Movie[] }).results);
-  //     } catch (err) {
-  //       console.error("Error fetching movies:", err);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   }
-  //   loadMovies();
-  // }, []);
+  useEffect(() => {
+    async function loadMovies() {
+      try {
+        const data = await fetchNowPlaying();
+        setMovies((data as { results: Movie[] }).results);
+      } catch (err) {
+        console.error("Error fetching movies:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadMovies();
+  }, []);
 
-  // if (loading) {
-  //   return (
-  //     <Container sx={{ textAlign: "center", mt: 8 }}>
-  //       <CircularProgress />
-  //     </Container>
-  //   );
-  // }
+  if (loading) {
+    return (
+      <Container sx={{ textAlign: "center", mt: 8 }}>
+        <CircularProgress />
+      </Container>
+    );
+  }
 
   return (
-    <Container sx={{ mt: 4 }}>
+    <Container sx={{ mt: 6 }}>
       <Typography
         variant="h4"
         fontWeight="bold"
@@ -42,7 +40,7 @@ export const NowPlaying: React.FC = () => {
       >
         Now Playing
       </Typography>
-      {/* <MovieGrid movies={movies} /> */}
+      <MovieGrid movies={movies} />
     </Container>
   );
 };
