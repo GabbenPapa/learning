@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Box,
@@ -26,6 +26,8 @@ export const GlobalSearchBar: React.FC = () => {
   const [isSearching, setIsSearching] = useState(false);
   const [showResults, setShowResults] = useState(false);
 
+  const searchContainerRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     if (query.length <= 2) {
       setResults([]);
@@ -49,6 +51,25 @@ export const GlobalSearchBar: React.FC = () => {
 
     return () => clearTimeout(timer);
   }, [query]);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        searchContainerRef.current &&
+        !searchContainerRef.current.contains(event.target as Node)
+      ) {
+        handleClear();
+      }
+    };
+
+    if (showResults) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showResults]);
 
   const handleClear = () => {
     setQuery("");
@@ -76,7 +97,7 @@ export const GlobalSearchBar: React.FC = () => {
       }}
     >
       <Container sx={{ py: 1 }}>
-        <Box sx={{ position: "relative" }}>
+        <Box sx={{ position: "relative" }} ref={searchContainerRef}>
           <TextField
             fullWidth
             placeholder="Search all movies..."
@@ -113,7 +134,6 @@ export const GlobalSearchBar: React.FC = () => {
             }}
           />
 
-          {/* Search Results Dropdown - Most már a relatív Box-on belül van */}
           {showResults && results.length > 0 && (
             <Paper
               elevation={8}
@@ -188,7 +208,7 @@ export const GlobalSearchBar: React.FC = () => {
                     textAlign="center"
                     sx={{ mt: 2 }}
                   >
-                    Showing first 20of {results.length} results
+                    Showing first 20 of {results.length} results
                   </Typography>
                 )}
               </Box>
