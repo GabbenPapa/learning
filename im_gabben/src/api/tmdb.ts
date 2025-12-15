@@ -38,6 +38,27 @@ export async function fetchNowPlaying() {
   if (!res.ok) throw new Error("Failed to fetch now playing movies");
   return res.json();
 }
+
+export async function fetchUpcomingMovies() {
+  const res = await fetch(`${BASE_URL}/movie/upcoming?language=en-US&page=1`, {
+    headers: {
+      Authorization: `Bearer ${ACCESS_TOKEN}`,
+    },
+  });
+  if (!res.ok) throw new Error("Failed to fetch upcoming movies");
+  return res.json();
+}
+
+export async function fetchTopRatedMovies() {
+  const res = await fetch(`${BASE_URL}/movie/top_rated?language=en-US&page=1`, {
+    headers: {
+      Authorization: `Bearer ${ACCESS_TOKEN}`,
+    },
+  });
+  if (!res.ok) throw new Error("Failed to fetch top rated movies");
+  return res.json();
+}
+
 export async function fetchMovieDetails(movieId: number) {
   const res = await fetch(`${BASE_URL}/movie/${movieId}?language=en-US`, {
     headers: {

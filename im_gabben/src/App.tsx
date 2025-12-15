@@ -4,6 +4,8 @@ import { Home } from "./pages/Home";
 import { PopularMovies } from "./pages/PopularMovies";
 import { NowPlaying } from "./pages/NowPlaying";
 import { MovieDetails } from "./components/MovieDetails";
+import { TopRated } from "./pages/TopRated";
+import { UpcomingMovies } from "./pages/UpcomingMovies";
 
 const router = createBrowserRouter([
   {
@@ -13,6 +15,8 @@ const router = createBrowserRouter([
       { path: "/popular", element: <PopularMovies /> },
       { path: "/now-playing", element: <NowPlaying /> },
       { path: "/movie/:id", element: <MovieDetails /> },
+      { path: "/top-rated", element: <TopRated /> },
+      { path: "/upcoming", element: <UpcomingMovies /> },
     ],
   },
 ]);

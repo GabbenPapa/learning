@@ -1,22 +1,46 @@
-import React from "react";
-// import { useNavigate } from "react-router-dom";
-
-import { Container } from "@mui/material";
-
-import { MovieSearch } from "../components/SearchMovies";
+import React, { useEffect, useState } from "react";
+import { Container, Typography, CircularProgress } from "@mui/material";
+import type { Movie } from "../types/Movie";
+import { fetchUpcomingMovies } from "../api/tmdb";
+import { MovieGrid } from "../components/MovieGrid";
 
 export const UpcomingMovies: React.FC = () => {
-  // const navigate = useNavigate();
+  const [movies, setMovies] = useState<Movie[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  // const [movies, setMovies] = useState<Movie[]>([]);
+  useEffect(() => {
+    async function loadMovies() {
+      try {
+        const data = await fetchUpcomingMovies();
+        setMovies((data as { results: Movie[] }).results);
+      } catch (err) {
+        console.error("Error fetching movies:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadMovies();
+  }, []);
+
+  if (loading) {
+    return (
+      <Container sx={{ textAlign: "center", mt: 8 }}>
+        <CircularProgress />
+      </Container>
+    );
+  }
 
   return (
     <Container sx={{ mt: 6 }}>
-      <MovieSearch
-        onSearch={() => {
-          console.log("search");
-        }}
-      />
+      <Typography
+        variant="h4"
+        fontWeight="bold"
+        textAlign="center"
+        gutterBottom
+      >
+        Upcoming Movies
+      </Typography>
+      <MovieGrid movies={movies} />
     </Container>
   );
 };

@@ -16,8 +16,10 @@ import { GlobalSearchBar } from "./GlobalSearchBar";
 
 const menuItems = [
   { text: "Home", path: "/" },
-  { text: "Popular Movies", path: "/popular" },
   { text: "Now Playing", path: "/now-playing" },
+  { text: "Popular Movies", path: "/popular" },
+  { text: "Top Rated", path: "/top-rated" },
+  { text: "Upcoming", path: "/upcoming" },
 ];
 
 export const Layout: React.FC = () => {
