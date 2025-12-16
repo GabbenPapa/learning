@@ -1,27 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Container, Typography } from "@mui/material";
-import type { Movie } from "../types/Movie";
-import { fetchUpcomingMovies } from "../api/tmdb";
 import { MovieGrid } from "../components/MovieGrid";
 import { LoadingSpinner } from "../components/LoadingSpinner";
+import { useUpcomingMovies } from "../hooks/useUpcomingMovies";
 
 export const UpcomingMovies: React.FC = () => {
-  const [movies, setMovies] = useState<Movie[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    async function loadMovies() {
-      try {
-        const data = await fetchUpcomingMovies();
-        setMovies((data as { results: Movie[] }).results);
-      } catch (err) {
-        console.error("Error fetching movies:", err);
-      } finally {
-        setLoading(false);
-      }
-    }
-    loadMovies();
-  }, []);
+  const { data, isLoading: loading, isError } = useUpcomingMovies();
 
   return (
     <>
@@ -35,7 +19,10 @@ export const UpcomingMovies: React.FC = () => {
         >
           Upcoming Movies
         </Typography>
-        <MovieGrid movies={movies} />
+
+        {isError && <p>Something went wrong!</p>}
+
+        {data && <MovieGrid movies={data.results} />}
       </Container>
     </>
   );

@@ -1,27 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Container, Typography } from "@mui/material";
-import type { Movie } from "../types/Movie";
-import { fetchTopRatedMovies } from "../api/tmdb";
 import { MovieGrid } from "../components/MovieGrid";
 import { LoadingSpinner } from "../components/LoadingSpinner";
+import { useTopRatedMovies } from "../hooks/useTopRatedMovies";
 
 export const TopRated: React.FC = () => {
-  const [movies, setMovies] = useState<Movie[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    async function loadMovies() {
-      try {
-        const data = await fetchTopRatedMovies();
-        setMovies((data as { results: Movie[] }).results);
-      } catch (err) {
-        console.error("Error fetching movies:", err);
-      } finally {
-        setLoading(false);
-      }
-    }
-    loadMovies();
-  }, []);
+  const { data, isLoading: loading, isError } = useTopRatedMovies();
 
   return (
     <>
@@ -35,7 +19,10 @@ export const TopRated: React.FC = () => {
         >
           Top Rated Movies
         </Typography>
-        <MovieGrid movies={movies} />
+
+        {isError && <p>Something went wrong!</p>}
+
+        {data && <MovieGrid movies={data.results} />}
       </Container>
     </>
   );

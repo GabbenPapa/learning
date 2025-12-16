@@ -20,8 +20,6 @@ export const MovieDetails = () => {
     }
   }, [id]);
 
-  console.log(movie);
-
   return (
     <>
       <LoadingSpinner loading={loading} />
